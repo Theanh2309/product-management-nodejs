@@ -11,6 +11,9 @@ const route = require("./routes/client/index.route");
 app.set("views", "./views");
 app.set("view engine", "pug");
 
+// config static file
+app.use(express.static("public"));
+
 // config route
 route(app);
 
