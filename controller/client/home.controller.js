@@ -1,3 +1,4 @@
 module.exports.index = (req, res) => {
-  res.render("client/page/home/index.pug");
+  // controller: lay data tra ve view
+  res.render("client/page/home/index.pug", { pageTitle: "trang chu" });
 };
