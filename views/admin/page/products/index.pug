@@ -1,25 +1,39 @@
 extends ../../layout/default.pug
-//- extend: ke thua layout
-//- inclue: nhúng 
-include ../../mixins/box-head.pug
-block main 
-  .container.my-3
-    .row
-      .col-12
-        +box-head("Danh sach san pham")
-    .row 
-      each item in products
-        .col-4.mb-3 
-          .product-item 
-            .inner-image 
-              img(
-                src=item.thumbnail 
-                alt=item.title
-              ) 
-          
-            .inner-content 
-              h3.inner-title #{item.title}
-              .inner-price-new #{item.priceNew}
-              .inner-price-old #{item.price}
-              .inner-discount #{item.discountPercentage}%
-//- overrite block main
+block main
+  h1 trang danh sach san pham
+  table.table.table-hover.table-sm
+    thead
+      tr
+        th STT
+        th Hinh anh
+        th Tieu de 
+        th Gia 
+        th Trang thai 
+        th Hanh dong
+    
+    tbody 
+      tr
+        td 1
+        td 
+          img(src="https://images.unsplash.com/photo-1596558450268-9c27524ba856?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aXBob25lJTIwOXxlbnwwfHwwfHx8MA%3D%3D", alt="alt" width="100px" height="auto")
+        td San pham 1
+        td 100$
+        td  
+          a(href="#" class="badge badge-success") Dang Hoat dong
+        td 
+          button(class="btn btn-warning btn-sm") Sua
+          button(class="btn btn-danger btn-sm ml-1") Xoa
+
+      tr
+        td 2
+        td 
+          img(src="https://images.unsplash.com/photo-1596558450268-9c27524ba856?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aXBob25lJTIwOXxlbnwwfHwwfHx8MA%3D%3D", alt="alt" width="100px" height="auto")
+        td San pham 2
+        td 150$
+        td  
+          a(href="#" class="badge badge-danger") Dung Hoat dong
+        td 
+          button(class="btn btn-warning btn-sm") Sua
+          button(class="btn btn-danger btn-sm ml-1") Xoa
+
+ 
