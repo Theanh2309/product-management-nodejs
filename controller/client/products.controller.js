@@ -7,15 +7,15 @@ module.exports.index = async (req, res) => {
     status: "active",
     deleted: false,
   });
-  // console.log(products);
   // logic them 1 filed newprice
-  const newProducts = products.map((item) => {
-    item.priceNew = (
-      (item.price * (100 - item.discountPercentage)) /
-      100
-    ).toFixed();
-  });
+  const newProducts = products.map((item) => ({
+    ...item.toObject(), // Sao chép toàn bộ thuộc tính của item (nếu dùng Mongoose)
+    priceNew: Number(
+      ((item.price * (100 - item.discountPercentage)) / 100).toFixed()
+    ), // Giá trị dạng số
+  }));
 
+  console.log(newProducts);
   res.render("client/page/products/index.pug", {
     pageTitle: "DS san pham",
     products: newProducts,
