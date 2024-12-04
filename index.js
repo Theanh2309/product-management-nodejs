@@ -5,6 +5,8 @@ require("dotenv").config();
 
 const database = require("./config/databse");
 
+const systemConfig = require("./config/system");
+
 const app = express();
 const port = process.env.PORT;
 
@@ -20,6 +22,10 @@ database.connect();
 // config pug
 app.set("views", "./views");
 app.set("view engine", "pug");
+
+// App local variables
+app.locals.prefixAdmin = systemConfig.prefixAdmin;
+// biến này sẽ tồn tại trong tất cả file PUG(taoj ra bieens toan cuc cho PUG)
 
 // config static file
 app.use(express.static("public"));
