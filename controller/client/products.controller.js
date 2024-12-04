@@ -1,3 +1,5 @@
+// [GET] /products
+
 const Product = require("../../models/product.model");
 // controller co nhiem vu xu ly cac logic
 module.exports.index = async (req, res) => {
