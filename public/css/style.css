@@ -41,8 +41,11 @@
 .product-item .inner-image img {
   width: 100%;
   border-radius: 10px;
+  height: 150px;
+  /* aspect-ratio: 9/9; */
 }
 .product-item .inner-content .inner-title {
+  padding-top: 10px;
   font-size: 20px;
   font-weight: 600;
 }
