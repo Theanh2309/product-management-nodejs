@@ -1,40 +1,16 @@
 // [GET] /admin/products
 const Product = require("../../models/product.model");
-// export ten controller(dashboard)
+
+// import ham filter
+const filterStatusHelper = require("../../helpers/filterStatus");
+
+// export ten controller(products)
 module.exports.index = async (req, res) => {
-  // Định nghĩa các trạng thái bộ lọc
-  let filtersStatus = [
-    {
-      name: "Tat ca",
-      status: "",
-      class: "",
-    },
-    {
-      name: "Hoat dong",
-      status: "active",
-      class: "",
-    },
-    {
-      name: "dung hoat dong",
-      status: "inactive",
-      class: "",
-    },
-  ];
-
-  if (req.query.status) {
-    const index = filtersStatus.findIndex((item) => {
-      return item.status == req.query.status;
-    });
-
-    filtersStatus[index].class = "active";
-  } else {
-    const index = filtersStatus.findIndex((item) => {
-      return item.status == "";
-    });
-    filtersStatus[index].class = "active";
-  }
-
   // console.log(req.query.status);
+  const filterStatusHelper = require("../../helpers/filterStatus");
+  const filtersStatus = filterStatusHelper(req.query);
+  // console.log(filtersStatus) --obj
+
   let find = {
     deleted: false,
     // truyen thang vaof day thi ko if else dc
@@ -73,6 +49,7 @@ module.exports.index = async (req, res) => {
   res.render("admin/page/products/index.pug", {
     pageTitle: "trang san pham admin",
     products: products,
+    // truyen ra cho views
     filtersStatus: filtersStatus,
     keyword: keyword,
   });
