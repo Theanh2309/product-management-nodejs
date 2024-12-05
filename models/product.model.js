@@ -14,6 +14,7 @@ const productSchema = new mongoose.Schema({
 });
 // tham so thu nhat: ten Modal
 // tham so thu 3:di tim vao connection(bang)co ten la: products
+// Kết nối đến collection "products"
 const Product = mongoose.model("Product", productSchema, "products");
 
 module.exports = Product;
