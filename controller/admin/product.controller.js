@@ -7,7 +7,7 @@ const filterStatusHelper = require("../../helpers/filterStatus");
 // export ten controller(products)
 module.exports.index = async (req, res) => {
   // console.log(req.query.status);
-  const filterStatusHelper = require("../../helpers/filterStatus");
+
   const filtersStatus = filterStatusHelper(req.query);
   // console.log(filtersStatus) --obj
 

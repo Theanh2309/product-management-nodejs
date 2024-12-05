@@ -1,4 +1,6 @@
 extends ../../layout/default.pug
+//- mixin(nhúng)
+include ../../mixins/filterStatus.pug
 block main
   h1 trang danh sach san pham
 
@@ -7,12 +9,7 @@ block main
     .card-body.mb-3
       .row
         .col-6
-          each item in filtersStatus
-            button(
-              class=`btn btn-sm ml-1 btn-outline-success ${item.class}`
-              button-status=item.status 
-      
-            ) #{item.name}
+          +filter-status(filtersStatus)
           //- button(
           //-   class="btn btn-sm ml-1 btn-outline-success"
           //-   button-status="active"
