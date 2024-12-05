@@ -1,8 +1,9 @@
 // [GET] /admin/products
 const Product = require("../../models/product.model");
 
-// import ham filter
+// import ham helpers
 const filterStatusHelper = require("../../helpers/filterStatus");
+const searchHelper = require("../../helpers/search");
 
 // export ten controller(products)
 module.exports.index = async (req, res) => {
@@ -36,21 +37,29 @@ module.exports.index = async (req, res) => {
   //   find.status = currentStatus;
   // }
   // ===========================================
-  let keyword = "";
-  if (req.query.keyword) {
-    keyword = req.query.keyword;
-    // truy van db, lay ra cac ban ghi co title la iphone
-    // Tìm kiếm tiêu đề chứa từ khóa (không phân biệt chữ hoa/thường)
-    const regex = new RegExp(keyword, "i");
-    find.title = regex;
-  }
 
+  // chuc nang search
+  const objectSearch = searchHelper(req.query);
+  if (objectSearch.regex) {
+    find.title = objectSearch.regex;
+  }
+  // console.log(objectSearch);
+  // chuyen qua helper==================================
+  // let keyword = "";
+  // if (req.query.keyword) {
+  //   keyword = req.query.keyword;
+  //   // truy van db, lay ra cac ban ghi co title la iphone
+  //   // Tìm kiếm tiêu đề chứa từ khóa (không phân biệt chữ hoa/thường)
+  //   const regex = new RegExp(keyword, "i");
+  //   find.title = regex;
+  // }
+  // ====================================================================
   const products = await Product.find(find);
   res.render("admin/page/products/index.pug", {
     pageTitle: "trang san pham admin",
     products: products,
     // truyen ra cho views
     filtersStatus: filtersStatus,
-    keyword: keyword,
+    keyword: objectSearch.keyword,
   });
 };

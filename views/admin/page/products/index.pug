@@ -1,6 +1,8 @@
 extends ../../layout/default.pug
 //- mixin(nhúng)
 include ../../mixins/filterStatus.pug
+include ../../mixins/search.pug
+
 block main
   h1 trang danh sach san pham
 
@@ -20,20 +22,21 @@ block main
           //-   ) Dung hoat dong
           
         .col-6
-          form(id="form-search")
-            .input-group 
-              input(
-                type = "text"
-                placeholder = "nhap tu khoa" 
-                name = "keyword"
-                class = "form-control"
-                value =  keyword              
-              )
-              .input-group-append 
-                button(
-                  class = "btn btn-success"
-                  type = "submit"
-                ) Tim kiem
+          +search(keyword)
+          //- form(id="form-search")
+          //-   .input-group 
+          //-     input(
+          //-       type = "text"
+          //-       placeholder = "nhap tu khoa" 
+          //-       name = "keyword"
+          //-       class = "form-control"
+          //-       value =  keyword              
+          //-     )
+          //-     .input-group-append 
+          //-       button(
+          //-         class = "btn btn-success"
+          //-         type = "submit"
+          //-       ) Tim kiem
   .card
     .card-header Danh sach san pham
     .card-body
