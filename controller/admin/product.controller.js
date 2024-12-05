@@ -2,7 +2,6 @@
 const Product = require("../../models/product.model");
 // export ten controller(dashboard)
 module.exports.index = async (req, res) => {
-  // console.log(req.query.status);
   // Định nghĩa các trạng thái bộ lọc
   let filtersStatus = [
     {
@@ -61,10 +60,20 @@ module.exports.index = async (req, res) => {
   //   find.status = currentStatus;
   // }
   // ===========================================
+  let keyword = "";
+  if (req.query.keyword) {
+    keyword = req.query.keyword;
+    // truy van db, lay ra cac ban ghi co title la iphone
+    // Tìm kiếm tiêu đề chứa từ khóa (không phân biệt chữ hoa/thường)
+    const regex = new RegExp(keyword, "i");
+    find.title = regex;
+  }
+
   const products = await Product.find(find);
   res.render("admin/page/products/index.pug", {
     pageTitle: "trang san pham admin",
     products: products,
     filtersStatus: filtersStatus,
+    keyword: keyword,
   });
 };

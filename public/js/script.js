@@ -25,3 +25,21 @@ if (buttonsStatus.length > 0) {
     });
   });
 }
+
+// Form search
+const formSearch = document.querySelector("#form-search");
+if (formSearch) {
+  let url = new URL(window.location.href);
+  formSearch.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const keyword = e.target.elements.keyword.value.trim(); // Loại bỏ khoảng trắng
+    if (keyword) {
+      url.searchParams.set("keyword", keyword); // Cập nhật param keyword
+    } else {
+      url.searchParams.delete("keyword"); // Xóa param nếu không có keyword
+    }
+
+    // Chuyển hướng đến URL đã cập nhật
+    window.location.href = url.href;
+  });
+}
