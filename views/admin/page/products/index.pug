@@ -1,44 +1,52 @@
 extends ../../layout/default.pug
 block main
   h1 trang danh sach san pham
-  table.table.table-hover.table-sm
-    thead
-      tr
-        th STT
-        th Hinh anh
-        th Tieu de 
-        th Gia 
-        th Trang thai 
-        th Hanh dong
-    
-    tbody 
-      each item, index in products
-        tr
-          td #{index + 1}
-          td 
-            img(src= item.thumbnail, alt="alt" width="100px" height="auto")
-          td #{item.title}
-          td #{item.price}
-          td  
-            if(item.status == "active")
-              a(href="#" class="badge badge-success") Dang Hoat dong
-            else
-              a(href="#" class="badge badge-danger") Dug Hoat dong
 
-          td 
-            button(class="btn btn-warning btn-sm") Sua
-            button(class="btn btn-danger btn-sm ml-1") Xoa
+  .card.mb-3 
+    .card-header Bo loc va tim kiem 
+    .card-body.mb-3
+      button(
+        class="btn btn-sm ml-1 btn-outline-success active"
+        button-status=""
+        ) Tat ca
+      button(
+        class="btn btn-sm ml-1 btn-outline-success"
+        button-status="active"
+        ) Hoat dong
+      button(
+        class="btn btn-sm ml-1 btn-outline-success"
+        button-status="inactive"
+        ) Dung hoat dong
 
-      //- tr
-        td 2
-        td 
-          img(src="https://images.unsplash.com/photo-1596558450268-9c27524ba856?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aXBob25lJTIwOXxlbnwwfHwwfHx8MA%3D%3D", alt="alt" width="100px" height="auto")
-        td San pham 2
-        td 150$
-        td  
-          a(href="#" class="badge badge-danger") Dung Hoat dong
-        td 
-          button(class="btn btn-warning btn-sm") Sua
-          button(class="btn btn-danger btn-sm ml-1") Xoa
+    .card
+    .card-header Danh sach san pham
+    .card-body
+      table.table.table-hover.table-sm
+        thead
+          tr
+            th STT
+            th Hinh anh
+            th Tieu de 
+            th Gia 
+            th Trang thai 
+            th Hanh dong
+        
+        tbody 
+          each item, index in products
+            tr
+              td #{index + 1}
+              td 
+                img(src= item.thumbnail, alt="alt" width="100px" height="auto")
+              td #{item.title}
+              td #{item.price}
+              td  
+                if(item.status == "active")
+                  a(href="#" class="badge badge-success") Dang Hoat dong
+                else
+                  a(href="#" class="badge badge-danger") Dug Hoat dong
 
- 
+              td 
+                button(class="btn btn-warning btn-sm") Sua
+                button(class="btn btn-danger btn-sm ml-1") Xoa
+
+
