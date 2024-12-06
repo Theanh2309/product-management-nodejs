@@ -43,3 +43,27 @@ if (formSearch) {
     window.location.href = url.href;
   });
 }
+
+// PAGINATION
+const buttonsPagination = document.querySelectorAll("[button-pagination]");
+if (buttonsPagination.length > 0) {
+  // dung new URl de co cac ham (function) de phan tich url trinh duyet(VD: searchParams)
+  let url = new URL(window.location.href);
+
+  buttonsPagination.forEach((button) => {
+    button.addEventListener("click", () => {
+      // lay page ma nguoi dung click
+      const page = button.getAttribute("button-pagination");
+      // console.log(status);
+      if (page) {
+        url.searchParams.set("page", page);
+      } else {
+        // tat ca
+        url.searchParams.delete("page");
+      }
+      // redirect
+      window.location.href = url.href;
+    });
+  });
+}
+// ĐỂ TRUYỀN CÁC PARAMS LÊN ỦL THÌ PHẢI ĐỊNH NGHĨA TRƯỚC URL

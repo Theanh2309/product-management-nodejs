@@ -12,31 +12,8 @@ block main
       .row
         .col-6
           +filter-status(filtersStatus)
-          //- button(
-          //-   class="btn btn-sm ml-1 btn-outline-success"
-          //-   button-status="active"
-          //-   ) Hoat dong
-          //- button(
-          //-   class="btn btn-sm ml-1 btn-outline-success"
-          //-   button-status="inactive"
-          //-   ) Dung hoat dong
-          
         .col-6
           +search(keyword)
-          //- form(id="form-search")
-          //-   .input-group 
-          //-     input(
-          //-       type = "text"
-          //-       placeholder = "nhap tu khoa" 
-          //-       name = "keyword"
-          //-       class = "form-control"
-          //-       value =  keyword              
-          //-     )
-          //-     .input-group-append 
-          //-       button(
-          //-         class = "btn btn-success"
-          //-         type = "submit"
-          //-       ) Tim kiem
   .card
     .card-header Danh sach san pham
     .card-body
@@ -63,9 +40,28 @@ block main
                   a(href="#" class="badge badge-success") Dang Hoat dong
                 else
                   a(href="#" class="badge badge-danger") Dug Hoat dong
-
               td 
                 button(class="btn btn-warning btn-sm") Sua
                 button(class="btn btn-danger btn-sm ml-1") Xoa
 
+  nav   
+    ul(class="pagination mt-4")
+      li(class="page-item")
+        button(class="page-link" button-pagination = 1) Di toi trang dau    
+      
+      if(pagination.currentPage > 1)
+        li(class="page-item")
+          button(class="page-link" button-pagination = (pagination.currentPage - 1)) PRE
+      
 
+      - for (var i = pagination.currentPage - 1; i <= pagination.currentPage + 1; ++i)
+        li(class=`page-item ${pagination.currentPage == i ? "active" :""}`)
+          button(class="page-link"
+          button-pagination = i) #{i}
+
+      if(pagination.currentPage < pagination.totalPage)
+        li(class="page-item")
+          button(class="page-link" button-pagination =  (pagination.currentPage + 1)) NEXT
+
+      li(class="page-item")
+          button(class="page-link" button-pagination =  (pagination.totalPage)) Di toi trang cuoi     
