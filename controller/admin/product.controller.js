@@ -4,6 +4,7 @@ const Product = require("../../models/product.model");
 // import ham helpers
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
+const paginationHelper = require("../../helpers/paginations");
 
 // export ten controller(products)
 module.exports.index = async (req, res) => {
@@ -56,24 +57,36 @@ module.exports.index = async (req, res) => {
   // ====================================================================
 
   // PAGINATION
-  let objectPagination = {
-    currentPage: 1,
-    limitItem: 4,
-  };
-  // lay ra trang hien tai
-  if (req.query.page) {
-    objectPagination.currentPage = parseInt(req.query.page) || 1;
-  }
+  // let objectPagination = {
+  //   currentPage: 1,
+  //   limitItem: 4,
+  // };
 
-  objectPagination.skip =
-    (objectPagination.currentPage - 1) * objectPagination.limitItem;
-
-  // total products with filtler conditional va total page
+  // dùng model bên này hoặc bên helper phải nhúng
   const countProducts = await Product.countDocuments(find);
-  const totalPage = Math.ceil(countProducts / objectPagination.limitItem);
-  objectPagination.totalPage = totalPage;
 
-  console.log({ totalPage });
+  let objectPagination = paginationHelper(
+    // ko Truyền obj này sang bên kia để ko bị fix cứng
+    {
+      currentPage: 1,
+      limitItem: 4,
+    },
+    req.query,
+    countProducts
+  );
+
+  // // lay ra trang hien tai
+  // if (req.query.page) {
+  //   objectPagination.currentPage = parseInt(req.query.page) || 1;
+  // }
+
+  // objectPagination.skip =
+  //   (objectPagination.currentPage - 1) * objectPagination.limitItem;
+
+  // // total products with filtler conditional va total page
+  // const countProducts = await Product.countDocuments(find);
+  // const totalPage = Math.ceil(countProducts / objectPagination.limitItem);
+  // objectPagination.totalPage = totalPage
   //=================================== END PAGINATION
 
   const products = await Product.find(find)
