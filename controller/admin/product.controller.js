@@ -102,7 +102,7 @@ module.exports.index = async (req, res) => {
   });
 };
 
-// [PATH] change-status/:status/:id
+// [PATH] admin/products/change-status/:status/:id
 // tạo ra route riêng để handle logic khác biệt
 module.exports.changeStatus = async (req, res) => {
   // lay ra cac bien route dong(dynamic route) voi cu phap :   req.params
@@ -113,5 +113,29 @@ module.exports.changeStatus = async (req, res) => {
 
   // cap nhat xong => redirect
   // res.redirect(`admin/products?page=${2}`);
+  res.redirect("back");
+};
+
+// [PATH] admin/products/change-multi
+module.exports.changeMulti = async (req, res) => {
+  // body parser
+  // console.log(req.body);
+
+  const type = req.body.type;
+  // convert string ids => array
+  const ids = req.body.ids.split(", ");
+  // sau nay co the co nhieu type(delete...) => switch case
+  switch (type) {
+    case "active":
+      // update 1 mang id ma minh muon update thay vi 1 id
+      // chua vaidate
+      await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+      break;
+    case "inactive":
+      await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+      break;
+    default:
+      break;
+  }
   res.redirect("back");
 };

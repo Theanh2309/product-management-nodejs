@@ -64,4 +64,69 @@ if (buttonsPagination.length > 0) {
     });
   });
 }
-// ĐỂ TRUYỀN CÁC PARAMS LÊN ỦL THÌ PHẢI ĐỊNH NGHĨA TRƯỚC URL
+// ĐỂ TRUYỀN CÁC PARAMS LÊN ỦRL THÌ PHẢI ĐỊNH NGHĨA TRƯỚC URL
+
+// CHECK BOX MULTI
+const checkboxMulti = document.querySelector("[checkbox-multi]");
+if (checkboxMulti) {
+  // get input checkall
+  const inputCheckAll = checkboxMulti.querySelector("input[name= 'checkall']");
+  const inputIds = checkboxMulti.querySelectorAll("input[name= 'id']");
+  // logic check-all
+  inputCheckAll.addEventListener("click", () => {
+    if (inputCheckAll.checked) {
+      inputIds.forEach((input) => {
+        input.checked = true;
+      });
+    } else {
+      inputIds.forEach((input) => {
+        input.checked = false;
+      });
+    }
+  });
+  inputIds.forEach((input) => {
+    input.addEventListener("click", () => {
+      const countChecked = checkboxMulti.querySelectorAll(
+        "input[name= 'id']:checked"
+      ).length;
+      if (countChecked == inputIds.length) {
+        inputCheckAll.checked = true;
+      } else {
+        inputCheckAll.checked = false;
+      }
+    });
+  });
+}
+
+// end checkbox multi
+
+// form change multi
+const formChangeMulti = document.querySelector("[form-change-multi]");
+if (formChangeMulti) {
+  formChangeMulti.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const checkboxMulti = document.querySelector("[checkbox-multi]");
+    // lay ra danh sach cac input da check
+    const inputsChecked = checkboxMulti.querySelectorAll(
+      "input[name= 'id']:checked"
+    );
+    // console.log(inputsChecked);
+    if (inputsChecked.length > 0) {
+      let ids = [];
+      const inputIds = formChangeMulti.querySelector("input[name = 'ids']");
+      inputsChecked.forEach((input) => {
+        const id = input.value;
+        ids.push(id);
+      });
+      // convert to string
+      // console.log(ids.join(", "));
+      // insert to input
+      // form thi ko gui dc 1 mang nhu dung theo huong API nen phai convert ve string de input chứa đc =. gui backend roi backend convert ve mang
+      inputIds.value = ids.join(", ");
+      formChangeMulti.submit();
+    } else {
+      alert("chon it nhat 1 ban ghi");
+    }
+  });
+}
+// end form change multi

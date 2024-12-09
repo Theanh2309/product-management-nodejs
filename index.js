@@ -1,6 +1,7 @@
 // cau hinh express
 const express = require("express");
 const methodOverride = require("method-override");
+const bodyParser = require("body-parser");
 require("dotenv").config();
 
 const database = require("./config/databse");
@@ -12,6 +13,15 @@ const port = process.env.PORT;
 
 // ghi de phuong thuc
 app.use(methodOverride("_method"));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+// app.use((req, res) => {
+//   res.setHeader("Content-Type", "text/plain");
+//   res.write("you posted: \n");
+//   res.end(JSON.stringify(req.body, null, 2));
+// });
+
 // import routes client
 const route = require("./routes/client/index.route");
 // import routes admin
