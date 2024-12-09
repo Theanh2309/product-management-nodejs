@@ -4,5 +4,6 @@ const router = express.Router();
 const controller = require("../../controller/admin/product.controller");
 // call function
 router.get("/", controller.index);
+router.patch("/change-status/:status/:id", controller.changeStatus);
 
 module.exports = router;

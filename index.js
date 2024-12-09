@@ -1,6 +1,6 @@
 // cau hinh express
 const express = require("express");
-
+const methodOverride = require("method-override");
 require("dotenv").config();
 
 const database = require("./config/databse");
@@ -10,6 +10,8 @@ const systemConfig = require("./config/system");
 const app = express();
 const port = process.env.PORT;
 
+// ghi de phuong thuc
+app.use(methodOverride("_method"));
 // import routes client
 const route = require("./routes/client/index.route");
 // import routes admin

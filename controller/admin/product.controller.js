@@ -101,3 +101,17 @@ module.exports.index = async (req, res) => {
     pagination: objectPagination,
   });
 };
+
+// [PATH] change-status/:status/:id
+// tạo ra route riêng để handle logic khác biệt
+module.exports.changeStatus = async (req, res) => {
+  // lay ra cac bien route dong(dynamic route) voi cu phap :   req.params
+  const { status, id } = req.params;
+  // update status
+  await Product.updateOne({ _id: id }, { status: status });
+  // res.send(`${status} - ${id}`);
+
+  // cap nhat xong => redirect
+  // res.redirect(`admin/products?page=${2}`);
+  res.redirect("back");
+};

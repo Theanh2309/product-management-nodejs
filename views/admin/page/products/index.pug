@@ -38,12 +38,28 @@ block main
               td #{item.price}
               td  
                 if(item.status == "active")
-                  a(href="#" class="badge badge-success") Dang Hoat dong
+                  //- THẻ a mặc định phương thức GET nên ko dùng sai phươgn thức đc 
+                  //- href="javascript:;" giong xu ly form
+                  a(
+                    href="javascript:;" 
+                    class="badge badge-success"
+                    button-change-status
+                    data-status = item.status
+                    data-id = item.id
+                  ) Dang Hoat dong
                 else
-                  a(href="#" class="badge badge-danger") Dug Hoat dong
+                    
+                  a(
+                    href="javascript:;" 
+                    class="badge badge-danger" 
+                    button-change-status 
+                    data-status = item.status
+                    data-id = item.id
+                    ) Dug Hoat dong
               td 
                 button(class="btn btn-warning btn-sm") Sua
                 button(class="btn btn-danger btn-sm ml-1") Xoa
+
   +pagination(pagination)
   //- nav   
   //-   ul(class="pagination mt-4")
@@ -65,4 +81,16 @@ block main
   //-         button(class="page-link" button-pagination =  (pagination.currentPage + 1)) NEXT
 
   //-     li(class="page-item")
-  //-         button(class="page-link" button-pagination =  (pagination.totalPage)) Di toi trang cuoi     
+  //-         button(class="page-link" button-pagination =  (pagination.totalPage)) Di toi trang cuoi  
+  //- GUI QUA FORM HOAC GUI QUA API
+  form(
+    action=""
+    method="POST"
+    id="form-change-status"
+    data-path=`${prefixAdmin}/products/change-status` 
+  )
+
+  script(src="/admin/js/products.js")
+
+
+
