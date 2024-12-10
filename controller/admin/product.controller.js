@@ -102,7 +102,7 @@ module.exports.index = async (req, res) => {
   });
 };
 
-// [PATH] admin/products/change-status/:status/:id
+// [PATCH] admin/products/change-status/:status/:id
 // tạo ra route riêng để handle logic khác biệt
 module.exports.changeStatus = async (req, res) => {
   // lay ra cac bien route dong(dynamic route) voi cu phap :   req.params
@@ -116,7 +116,7 @@ module.exports.changeStatus = async (req, res) => {
   res.redirect("back");
 };
 
-// [PATH] admin/products/change-multi
+// [PATCH] admin/products/change-multi
 module.exports.changeMulti = async (req, res) => {
   // body parser
   // console.log(req.body);
@@ -137,5 +137,12 @@ module.exports.changeMulti = async (req, res) => {
     default:
       break;
   }
+  res.redirect("back");
+};
+
+// [DELETE] admin/products/delete/:id
+module.exports.deleteItem = async (req, res) => {
+  const { id } = req.params;
+  await Product.deleteOne({ _id: id });
   res.redirect("back");
 };
