@@ -90,6 +90,7 @@ module.exports.index = async (req, res) => {
   //=================================== END PAGINATION
 
   const products = await Product.find(find)
+    .sort({ position: "desc" })
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip);
   res.render("admin/page/products/index.pug", {
