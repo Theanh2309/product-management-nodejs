@@ -145,7 +145,8 @@ module.exports.deleteItem = async (req, res) => {
   const { id } = req.params;
   // xoa  vinh vien(xoa cung)
   // await Product.deleteOne({ _id: id });
-  // xoa mem
-  await Product.updateOne({ _id: id }, { deleted: true });
+  // xoa mem dong thoi cap nhat thoi gian xoa
+  await Product.updateOne({ _id: id }, { deleted: true, deletedAt: newDate() });
+
   res.redirect("back");
 };

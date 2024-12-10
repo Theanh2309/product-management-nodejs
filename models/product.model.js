@@ -11,6 +11,7 @@ const productSchema = new mongoose.Schema({
   status: String,
   position: Number,
   deleted: Boolean,
+  deletedAt: Date,
 });
 // tham so thu nhat: ten Modal
 // tham so thu 3:di tim vao connection(bang)co ten la: products
