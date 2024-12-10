@@ -110,6 +110,18 @@ if (formChangeMulti) {
     const inputsChecked = checkboxMulti.querySelectorAll(
       "input[name= 'id']:checked"
     );
+
+    // lay ra kieu hanh dong
+    const typeChange = e.target.elements.type.value;
+    if (typeChange == "delete-all") {
+      const isConfirm = confirm("ban co muon xoa ko?");
+      // neu HUy thi ko gui len server thong qua submit(neu ko xoa thi cung ko gui len server)
+      if (!isConfirm) {
+        return;
+      }
+    }
+
+    // neu nguoi dung co lua chon thi thuc thi
     // console.log(inputsChecked);
     if (inputsChecked.length > 0) {
       let ids = [];
