@@ -126,9 +126,19 @@ if (formChangeMulti) {
     if (inputsChecked.length > 0) {
       let ids = [];
       const inputIds = formChangeMulti.querySelector("input[name = 'ids']");
+      // lay ra nhung input da check
       inputsChecked.forEach((input) => {
         const id = input.value;
-        ids.push(id);
+        if (typeChange == "change-position") {
+          // gui kem theo position
+          const position = input
+            .closest("tr")
+            .querySelector("input[name = 'position']").value;
+          // form ko gui di obj, array duoc nen uu tien gui string
+          ids.push(`${id}-${position}`);
+        } else {
+          ids.push(id);
+        }
       });
       // convert to string
       // console.log(ids.join(", "));

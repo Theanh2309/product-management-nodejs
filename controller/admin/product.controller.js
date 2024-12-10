@@ -132,6 +132,7 @@ module.exports.changeMulti = async (req, res) => {
       await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
       break;
     case "inactive":
+      // tat ca update cung 1 gia tri
       await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
       break;
     case "delete-all":
@@ -139,6 +140,20 @@ module.exports.changeMulti = async (req, res) => {
         { _id: { $in: ids } },
         { deleted: true, deletedAt: new Date() }
       );
+      break;
+    case "change-position":
+      // console.log(ids)
+      // tat ca update nhung gia tri khac nhau(vế thứ 2) => lap qua tung item va update tung item
+      for (const item of ids) {
+        let [id, position] = item.split("-");
+        position = parseInt(position);
+        await Product.updateOne({ _id: id }, { position: position });
+      }
+      // await Product.updateMany(
+      //   { _id: { $in: ids } }
+
+      //   { deleted: true, deletedAt: new Date() }
+      // );
       break;
     default:
       break;
