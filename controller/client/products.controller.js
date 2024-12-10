@@ -8,7 +8,7 @@ module.exports.index = async (req, res) => {
     // bo loc
     status: "active",
     deleted: false,
-  });
+  }).sort({ position: "desc" });
   // logic them 1 filed newprice
   const newProducts = products.map((item) => ({
     ...item.toObject(), // Sao chép toàn bộ thuộc tính của item (nếu dùng Mongoose)
