@@ -2,9 +2,11 @@
 // modal la trung gain ket noi controller va db
 // uu diem cua mongooose la co schema=> buọco phải tuân theo bộ khung này( ko cho front end insert truc tiep data vao db neu ko thi front end thich gui cai gi cung insert vao db)
 const { default: mongoose } = require("mongoose");
+const slug = require("mongoose-slug-updater");
+mongoose.plugin(slug);
 const productSchema = new mongoose.Schema(
   {
-    title: String,
+    title: String, //san pham 1
     description: String,
     price: Number,
     discountPercentage: Number,
@@ -12,6 +14,7 @@ const productSchema = new mongoose.Schema(
     thumbnail: String,
     status: String,
     position: Number,
+    slug: { type: String, slug: "title", unique: true }, // san pham 1 - id random(slug luon la duy nhat)
     deleted: { type: Boolean, default: false },
     deletedAt: Date,
   },
