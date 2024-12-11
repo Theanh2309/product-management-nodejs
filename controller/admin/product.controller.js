@@ -208,7 +208,9 @@ module.exports.createPost = async (req, res) => {
   req.body.price = parseInt(req.body.price);
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
   req.body.stock = parseInt(req.body.stock);
-  console.log(req.body);
+  // console.log(req.body);
+  // console.log(req.file); image, gocx,...(file)
+
   if (!req.body.position || req.body.position.trim() === "") {
     // Đếm số sản phẩm trong DB và tăng thêm 1
     const countProducts = await Product.countDocuments();
@@ -216,10 +218,17 @@ module.exports.createPost = async (req, res) => {
   } else {
     req.body.position = parseInt(req.body.position);
   }
-
+  // luu path image vao db
+  req.body.thumbnail = `/uploads/${req.file.filename}`;
+  // localhost:3000/upload/duong_dan_anh
   // create 1 sp o phia modal de validate schema(chua luu vao db)
   const product = new Product(req.body);
   // insert to db
   await product.save();
   res.redirect(`${systemcConfig.prefixAdmin}/products`);
 };
+
+// UPLOAD IMAGE
+// upload => folder /public/upload(ma hoa anh thanh ten file(xem trong req.(filename duy nhat tranh trunhg ten anh))))
+// lay anh trong folder /public/upload =>format-> up len db
+// cutom file name

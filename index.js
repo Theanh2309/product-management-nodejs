@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const flash = require("express-flash");
+// const multer = require("multer");
 
 require("dotenv").config();
 
@@ -48,7 +49,7 @@ app.use(flash());
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 // biến này sẽ tồn tại trong tất cả file PUG(taoj ra bieens toan cuc cho PUG)
 
-// config static file
+// config static file(chi dung choPUG)
 app.use(express.static("public"));
 
 // config route client + admin

@@ -4,8 +4,9 @@ block main
   h1(class="mb-4") Them moi san pham 
   form(
     action=`${prefixAdmin}/products/create`
-    method="POST"
     id="form-create-product"
+    method="POST"
+    enctype="multipart/form-data"
   ) 
     //-name cua cac input lay tuong ung theo cac truong trong db(khi ng dung gui name len server thi luu luoon vao db nen name can giong trong db)
     div(class="form-group")
@@ -66,10 +67,11 @@ block main
     div(class="form-group")
       label(for="thumbnail") Anh
       input(
-        type="text"
+        type="file"
         name="thumbnail" 
         id="thumbnail" 
-        class="form-control" 
+        class="form-control-file" 
+        accept="image/*"
       ) 
     div(class="form-group")
       label(for="position") Vi tri
