@@ -1,6 +1,6 @@
 // [GET] /admin/products
 const Product = require("../../models/product.model");
-
+const systemcConfig = require("../../config/system");
 // import ham helpers
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
@@ -114,6 +114,8 @@ module.exports.changeStatus = async (req, res) => {
 
   // cap nhat xong => redirect
   // res.redirect(`admin/products?page=${2}`);
+  req.flash("success", "cap nhat trang thai san pham thanh cong");
+
   res.redirect("back");
 };
 
@@ -131,16 +133,28 @@ module.exports.changeMulti = async (req, res) => {
       // update 1 mang id ma minh muon update thay vi 1 id
       // chua vaidate
       await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+      await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+      req.flash(
+        "success",
+        `cap nhat trang thai san pham thanh cong ${ids.length} san pham hoat dong`
+      );
       break;
     case "inactive":
       // tat ca update cung 1 gia tri
       await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+      req.flash(
+        "success",
+        `cap nhat trang thai san pham thanh cong ${ids.length} san pham dung hoat dong`
+      );
+
       break;
     case "delete-all":
       await Product.updateMany(
         { _id: { $in: ids } },
         { deleted: true, deletedAt: new Date() }
       );
+      await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+      req.flash("success", `xoa san pham thanh cong ${ids.length} san pham`);
       break;
     case "change-position":
       // console.log(ids)
@@ -149,6 +163,11 @@ module.exports.changeMulti = async (req, res) => {
         let [id, position] = item.split("-");
         position = parseInt(position);
         await Product.updateOne({ _id: id }, { position: position });
+        await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+        req.flash(
+          "success",
+          `thanh doi vi tri san pham thanh cong ${ids.length} san pham`
+        );
       }
       // await Product.updateMany(
       //   { _id: { $in: ids } }
@@ -174,4 +193,33 @@ module.exports.deleteItem = async (req, res) => {
   );
 
   res.redirect("back");
+};
+
+// [GET] admin/products/create
+// tao giao dien => phuong thuc GET, submit => POST
+module.exports.create = async (req, res) => {
+  res.render("admin/page/products/create.pug", {
+    pageTitle: "them moi san pham",
+  });
+};
+
+module.exports.createPost = async (req, res) => {
+  // convet to number
+  req.body.price = parseInt(req.body.price);
+  req.body.discountPercentage = parseInt(req.body.discountPercentage);
+  req.body.stock = parseInt(req.body.stock);
+  console.log(req.body);
+  if (!req.body.position || req.body.position.trim() === "") {
+    // Đếm số sản phẩm trong DB và tăng thêm 1
+    const countProducts = await Product.countDocuments();
+    req.body.position = countProducts + 1;
+  } else {
+    req.body.position = parseInt(req.body.position);
+  }
+
+  // create 1 sp o phia modal de validate schema(chua luu vao db)
+  const product = new Product(req.body);
+  // insert to db
+  await product.save();
+  res.redirect(`${systemcConfig.prefixAdmin}/products`);
 };

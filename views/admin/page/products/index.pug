@@ -4,9 +4,10 @@ include ../../mixins/filterStatus.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
-
+include ../../mixins/alert.pug
 
 block main
+  +alert-success(3000)
   h1 trang danh sach san pham
 
   .card.mb-3 
@@ -20,7 +21,14 @@ block main
   .card.mb-3 
     .card-header Danh sach san pham
     .card-body
-      +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+      .row
+        .col-8
+          +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+        .col-4 
+          a(
+            href=`${prefixAdmin}/products/create`
+            class="btn btn-outline-success"
+          ) + Them moi
       //- form(
       //-   action =`${prefixAdmin}/products/change-multi?_method=PATCH` 
       //-   method = "POST"
