@@ -270,7 +270,7 @@ module.exports.edit = async (req, res) => {
       product: product,
     });
   } catch (error) {
-    // res.flash("error", "khong ton tai san pham nay!");
+    // req.flash("error", "khong ton tai san pham nay!");
     redirect(`${systemcConfig.prefixAdmin / products}`);
   }
 };
@@ -292,8 +292,10 @@ module.exports.editPatch = async (req, res) => {
   // create 1 sp o phia modal de validate schema(chua luu vao db)
   try {
     await Product.updateOne({ _id: req.params.id }, req.body);
-  } catch (error) {}
-  // res.flash("error", "update ko thanh cong");
+    req.flash("success", "update thanh cong");
+  } catch (error) {
+    req.flash("error", "update ko thanh cong");
+  }
   // back lai trang chinh sua
   res.redirect("back");
 };
@@ -301,3 +303,19 @@ module.exports.editPatch = async (req, res) => {
 // upload => folder /public/upload(ma hoa anh thanh ten file(xem trong req.(filename duy nhat tranh trunhg ten anh))))
 // lay anh trong folder /public/upload =>format-> up len db
 // cutom file name
+module.exports.detail = async (req, res) => {
+  // tim kiem ban ghi
+  try {
+    const find = {
+      deleted: false,
+      _id: req.params.id,
+    };
+    const product = await Product.findOne(find);
+    res.render("admin/page/products/detail.pug", {
+      pageTitle: product.title,
+      product: product,
+    });
+  } catch (error) {
+    res.redirect(`${systemcConfig.prefixAdmin}/products`);
+  }
+};

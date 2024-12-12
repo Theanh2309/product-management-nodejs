@@ -46,4 +46,6 @@ router.patch(
   // nếu ghi các hàm ở đây là luôn có réq và res mà ko cần truyền(điển hình validate.createPost )
   controller.editPatch
 );
+
+router.get("/detail/:id", controller.detail);
 module.exports = router;

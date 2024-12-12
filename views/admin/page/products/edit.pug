@@ -1,7 +1,8 @@
 extends ../../layout/default.pug
 include ../../mixins/alert.pug
 block main
-  +alert-error(4000)
+  +alert-success(4000)
+  +alert-error(3000)
   h1(class="mb-4") Chinh sua san pham 
   form(
     action=`${prefixAdmin}/products/edit/${product.id}?_method=PATCH`

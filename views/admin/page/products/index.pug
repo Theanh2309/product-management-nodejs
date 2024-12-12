@@ -106,6 +106,10 @@ block main
                     ) Dug Hoat dong
               td 
                 a(
+                  class="btn btn-secondary btn-sm"
+                  href=`${prefixAdmin}/products/detail/${item.id}`
+                ) xem chi tiet
+                a(
                   class="btn btn-warning btn-sm"
                   href=`${prefixAdmin}/products/edit/${item.id}`
                 ) Sua
@@ -114,6 +118,7 @@ block main
                 data-id = item.id
                 button-delete
                 ) Xoa
+
 
   +pagination(pagination)
   //- nav   
