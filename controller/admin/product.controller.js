@@ -251,6 +251,52 @@ module.exports.createPost = async (req, res) => {
   res.redirect(`${systemcConfig.prefixAdmin}/products`);
 };
 
+module.exports.edit = async (req, res) => {
+  // lay ra thong tin san pham dua vao id san pham => tra ve view de hien thi
+  const id = req.params.id;
+  // truy van
+  try {
+    const find = {
+      // san pham xoa roi thi ko cho edit nua
+      deleted: false,
+      _id: id,
+    };
+    const product = await Product.findOne(find);
+    // find tra ra 1 array => findone tim 1 phan tu=> tra ra object
+
+    res.render("admin/page/products/edit.pug", {
+      pageTitle: "chinh sua san pham",
+      // truyen data ra ngoai view
+      product: product,
+    });
+  } catch (error) {
+    // res.flash("error", "khong ton tai san pham nay!");
+    redirect(`${systemcConfig.prefixAdmin / products}`);
+  }
+};
+
+module.exports.editPatch = async (req, res) => {
+  // console.log(req.body)
+  //  moõi con troller phải trả về gì đó cho giao diện để tránh load vô hạn
+  req.body.price = parseInt(req.body.price);
+  req.body.discountPercentage = parseInt(req.body.discountPercentage);
+  req.body.stock = parseInt(req.body.stock);
+  req.body.position = parseInt(req.body.position);
+  // neu co gui file mois len thi update lại file mới bằng link mới
+  // luu path image vao db
+  if (req.file) {
+    // neu co file up len thi moi cho vao db => tranh die server
+    req.body.thumbnail = `/uploads/${req.file.filename}`;
+  }
+  // localhost:3000/upload/duong_dan_anh
+  // create 1 sp o phia modal de validate schema(chua luu vao db)
+  try {
+    await Product.updateOne({ _id: req.params.id }, req.body);
+  } catch (error) {}
+  // res.flash("error", "update ko thanh cong");
+  // back lai trang chinh sua
+  res.redirect("back");
+};
 // UPLOAD IMAGE
 // upload => folder /public/upload(ma hoa anh thanh ten file(xem trong req.(filename duy nhat tranh trunhg ten anh))))
 // lay anh trong folder /public/upload =>format-> up len db

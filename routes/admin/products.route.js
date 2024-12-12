@@ -33,4 +33,17 @@ router.post(
   controller.createPost
 );
 
+// EDIT PRODUCT
+router.get("/edit/:id", controller.edit);
+// thumbnail: truong trong db
+router.patch(
+  "/edit/:id",
+  // neu co upload anh thi cung upload len
+  upload.single("thumbnail"),
+  // middle ware
+  // validate giong voi post
+  validate.createPost,
+  // nếu ghi các hàm ở đây là luôn có réq và res mà ko cần truyền(điển hình validate.createPost )
+  controller.editPatch
+);
 module.exports = router;
