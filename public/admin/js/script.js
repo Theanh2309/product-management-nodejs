@@ -155,8 +155,8 @@ if (formChangeMulti) {
 
 // handle logic show alert
 const showAlert = document.querySelector("[show-alert]");
-const closeAlert = showAlert.querySelector("[close-alert]");
 if (showAlert) {
+  const closeAlert = showAlert.querySelector("[close-alert]");
   const time = parseInt(showAlert.getAttribute("data-time"));
   setTimeout(() => {
     showAlert.classList.add("alert-hidden");
@@ -166,5 +166,28 @@ if (showAlert) {
     showAlert.classList.add("alert-hidden");
   });
 }
-
 // hidden
+document.addEventListener("DOMContentLoaded", () => {
+  const uploadImage = document.querySelector("[upload-image]");
+  if (uploadImage) {
+    const uploadImageInput = uploadImage.querySelector("[upload-image-input]");
+    const uploadImagePreview = uploadImage.querySelector(
+      "[upload-image-preview]"
+    );
+    if (!uploadImageInput || !uploadImagePreview) {
+      console.error("Upload image input or preview element not found!");
+    } else {
+      uploadImageInput.addEventListener("change", (e) => {
+        // destructoring
+        const [file] = e.target.files;
+        console.log("File selected:", file); // Debug
+        if (file) {
+          uploadImagePreview.src = URL.createObjectURL(file);
+        }
+      });
+    }
+  }
+});
+// chuc nang xoa anh preview
+// click => uploadImageInput.value ="" va uploadImagePreview.src=""
+// preview image upload js

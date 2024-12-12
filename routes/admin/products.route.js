@@ -10,6 +10,8 @@ const upload = multer({ storage: storageMulter() });
 
 // nhung controller dashboard
 const controller = require("../../controller/admin/product.controller");
+const validate = require("../../validates/admin/product.validate");
+
 // call function
 router.get("/", controller.index);
 router.patch("/change-status/:status/:id", controller.changeStatus);
@@ -22,6 +24,13 @@ router.delete("/delete/:id", controller.deleteItem);
 // (neu nguoi dung GET thi tra ra giao dien, gui pguong thuc la POST thi gui data)
 router.get("/create", controller.create);
 // thumbnail: truong trong db
-router.post("/create", upload.single("thumbnail"), controller.createPost);
+router.post(
+  "/create",
+  upload.single("thumbnail"),
+  // middle ware
+  validate.createPost,
+  // nếu ghi các hàm ở đây là luôn có réq và res mà ko cần truyền(điển hình validate.createPost )
+  controller.createPost
+);
 
 module.exports = router;

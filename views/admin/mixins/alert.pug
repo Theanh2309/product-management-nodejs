@@ -7,3 +7,13 @@ mixin alert-success(time)
         show-alert
       ) #{messages.success} <span close-alert>x</span>
       //- message cua flass la bien globol nen ko can truyen 
+
+mixin alert-error(time)
+  - if(messages.error)
+      .message.info
+      div(
+        class= "alert alert-danger"
+        data-time=time
+        show-alert
+      ) #{messages.error} <span close-alert>x</span>
+      //- message cua flass la bien globol nen ko can truyen 

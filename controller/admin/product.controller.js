@@ -204,6 +204,26 @@ module.exports.create = async (req, res) => {
 };
 
 module.exports.createPost = async (req, res) => {
+  // validate
+  // if (!req.body.title) {
+  //   // neu ko nhap tieu de
+  //   // luu tru 1 thong bao tam thoi
+  //   req.flash("error", "vui long nhap tieu de");
+  //   // Kết thúc request bằng cách chuyển hướng lại trang trước đó
+  //   res.redirect("back");
+  //   // ngan chan thuc thi nhungdoan code ben duoi
+  //   return;
+  // }
+
+  // if (req.body.title.length < 1) {
+  //   // neu ko nhap tieu de
+  //   // luu tru 1 thong bao tam thoi
+  //   req.flash("error", "vui long nhap tieu de it nhat 1 ki tu");
+  //   // Kết thúc request bằng cách chuyển hướng lại trang trước đó
+  //   res.redirect("back");
+  //   // ngan chan thuc thi nhungdoan code ben duoi
+  //   return;
+  // }
   // convet to number
   req.body.price = parseInt(req.body.price);
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
@@ -219,10 +239,13 @@ module.exports.createPost = async (req, res) => {
     req.body.position = parseInt(req.body.position);
   }
   // luu path image vao db
-  req.body.thumbnail = `/uploads/${req.file.filename}`;
+  if (req.file) {
+    // neu co file up len thi moi cho vao db => tranh die server
+    req.body.thumbnail = `/uploads/${req.file.filename}`;
+  }
   // localhost:3000/upload/duong_dan_anh
   // create 1 sp o phia modal de validate schema(chua luu vao db)
-  const product = new Product(req.body);
+  const product = new Produc(req.body);
   // insert to db
   await product.save();
   res.redirect(`${systemcConfig.prefixAdmin}/products`);

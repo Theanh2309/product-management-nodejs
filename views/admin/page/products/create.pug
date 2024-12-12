@@ -1,6 +1,7 @@
 extends ../../layout/default.pug
-
+include ../../mixins/alert.pug
 block main
+  +alert-error(4000)
   h1(class="mb-4") Them moi san pham 
   form(
     action=`${prefixAdmin}/products/create`
@@ -64,7 +65,10 @@ block main
     
     
       
-    div(class="form-group")
+    div(
+      class="form-group"
+      upload-image
+    )
       label(for="thumbnail") Anh
       input(
         type="file"
@@ -72,7 +76,10 @@ block main
         id="thumbnail" 
         class="form-control-file" 
         accept="image/*"
-      ) 
+        upload-image-input
+      )
+      img(src="" alt="image" upload-image-preview class="image-prev") 
+
     div(class="form-group")
       label(for="position") Vi tri
       input(
@@ -111,3 +118,6 @@ block main
     ) Tao moi
     
   script(src="/admin/js/products.js")
+
+  
+

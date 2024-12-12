@@ -1,6 +1,7 @@
 console.log("XU ly logic trang danh sach san pham");
 // change status
 const formChangeStatus = document.querySelector("#form-change-status");
+
 const patch = formChangeStatus.getAttribute("data-path");
 
 const buttonChangeStatus = document.querySelectorAll("[button-change-status]");
