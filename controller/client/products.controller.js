@@ -1,5 +1,4 @@
 // [GET] /products
-
 const Product = require("../../models/product.model");
 // controller co nhiem vu xu ly cac logic
 module.exports.index = async (req, res) => {
@@ -19,7 +18,25 @@ module.exports.index = async (req, res) => {
 
   console.log(newProducts);
   res.render("client/page/products/index.pug", {
-    pageTitle: "DS san pham",
+    pageTitle: "Chi tiet san pham",
     products: newProducts,
   });
 };
+
+// [GET] /products/:slug
+module.exports.detail= async (req, res) => {
+  try {
+    const find = {
+      deleted: false,
+      slug: req.params.slug,
+      status: "active"
+    };
+    const product = await Product.findOne(find);
+    res.render("client/page/products/detail.pug", {
+      pageTitle: product.title,
+      product: product,
+    });
+  } catch (error) {
+    res.redirect(`/products`);
+  }
+}

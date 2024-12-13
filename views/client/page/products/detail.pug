@@ -1,0 +1,27 @@
+extend ../../layout/default.pug
+block main 
+  .container.my-3 
+    .row 
+      .col-12 
+        if (product.title)
+          h1(class="mb-4") #{product.title}
+  
+        if (product.price)
+          div(class="mb-4") <span> gia: #{product.price}
+        
+        if (product.discountPercentage)
+          div(class="mb-4") <span> giam gia: #{product.discountPercentage}
+        
+        if (product.stock)
+          div(class="mb-4") <span> con lai; #{product.stock}
+
+        if(product.thumbnail)
+          div(class="mb-4")
+            img(
+              src=product.thumbnail
+              style="width: 100px"
+            )
+
+        if (product.description)
+          div(class="mb-4") <span> Mo ta: #{product.description}
+
