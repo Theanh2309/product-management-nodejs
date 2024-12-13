@@ -37,7 +37,7 @@ const routeAdmin = require("./routes/admin/index.route");
 database.connect();
 
 // config pug
-app.set("views", "./views");
+app.set("views", `${__dirname}/views`);
 app.set("view engine", "pug");
 
 // flash(cu phap moi)
@@ -49,8 +49,11 @@ app.use(flash());
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 // biến này sẽ tồn tại trong tất cả file PUG(taoj ra bieens toan cuc cho PUG)
 
-// config static file(chi dung choPUG)
-app.use(express.static("public"));
+// config static file(chi dung choPUG)(duoi local)
+// app.use(express.static("public"));
+// ?khi day len online=> thay doi duong dan,(phai dung tu thu muc goc => public) vi online ko hieu thu muc public
+app.use(express.static(`${__dirname}/public`));
+
 
 // config route client + admin
 route(app);
