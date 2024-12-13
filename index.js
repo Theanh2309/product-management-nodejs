@@ -14,7 +14,7 @@ const database = require("./config/databse");
 const systemConfig = require("./config/system");
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 4000;
 
 // ghi de phuong thuc
 app.use(methodOverride("_method"));
