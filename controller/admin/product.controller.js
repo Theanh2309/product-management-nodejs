@@ -245,7 +245,7 @@ module.exports.createPost = async (req, res) => {
   }
   // localhost:3000/upload/duong_dan_anh
   // create 1 sp o phia modal de validate schema(chua luu vao db)
-  const product = new Produc(req.body);
+  const product = new Product(req.body);
   // insert to db
   await product.save();
   res.redirect(`${systemcConfig.prefixAdmin}/products`);
