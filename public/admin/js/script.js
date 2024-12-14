@@ -191,3 +191,41 @@ document.addEventListener("DOMContentLoaded", () => {
 // chuc nang xoa anh preview
 // click => uploadImageInput.value ="" va uploadImagePreview.src=""
 // preview image upload js
+
+
+//  SAP XEP
+const sort = document.querySelector("[sort]")
+if(sort){
+	// lay url hien tai
+	let url = new URL(window.location.href)
+  const sortSelect = sort.querySelector("[sort-select]")
+  const sortClear = sort.querySelector("[sort-clear]")
+  
+  sortSelect.addEventListener("change", (e)=>{
+    const [sortKey,sortValue] = e.target.value.split("-");
+		// cap nhat url
+		url.searchParams.set("sortKey", sortKey)
+		url.searchParams.set("sortValue", sortValue)
+
+		// redirect ve trang do
+		window.location= url.href
+  })
+
+	sortClear.addEventListener("click", ()=>{
+		url.searchParams.delete("sortKey")
+		url.searchParams.delete("sortValue")
+		window.location= url.href
+	})
+
+	// add selected for option
+	const sortKey =url.searchParams.get("sortKey")
+	const sortValue =url.searchParams.get("sortValue")
+		if(sortKey && sortValue){
+				// get option co value tuong ung
+				const stringSort = `${sortKey}-${sortValue}`
+			const optionSelected = sortSelect.querySelector(`option[value='${stringSort}']`) 
+		// hoặc là lặp qua từng option xem value nào === string sort rồi lấy ra xong thêm thuộc tính selected
+		optionSelected.selected = true
+		// selected laf thuoc tinh mac dinh nen ko can ham setAttribute
+		}
+}

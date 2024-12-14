@@ -89,8 +89,20 @@ module.exports.index = async (req, res) => {
   // objectPagination.totalPage = totalPage
   //=================================== END PAGINATION
 
+  const sort = {
+  }
+  // check neu nguoi dung truyen query parma len url
+  if(req.query.sortKey && req.query.sortValue){
+    // key la 1 string
+    sort[req.query.sortKey] = req.query.sortValue
+  }else{
+    // default
+    sort.position = "desc"
+  }
+
   const products = await Product.find(find)
-    .sort({ position: "desc" })
+    // .sort({ position: "desc" })
+    .sort(sort)
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip);
   res.render("admin/page/products/index.pug", {
@@ -285,10 +297,10 @@ module.exports.editPatch = async (req, res) => {
   req.body.position = parseInt(req.body.position);
   // neu co gui file mois len thi update lại file mới bằng link mới
   // luu path image vao db
-  if (req.file) {
-    // neu co file up len thi moi cho vao db => tranh die server
-    req.body.thumbnail = `/uploads/${req.file.filename}`;
-  }
+  // if (req.file) {
+  //   // neu co file up len thi moi cho vao db => tranh die server
+  //   req.body.thumbnail = `/uploads/${req.file.filename}`;
+  // }
   // localhost:3000/upload/duong_dan_anh
   // create 1 sp o phia modal de validate schema(chua luu vao db)
   try {

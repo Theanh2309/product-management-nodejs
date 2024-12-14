@@ -1,6 +1,7 @@
 // require("dotenv").config();
 const express = require("express");
 const multer = require("multer");
+// this is import file, not import func 
 const uploadCloud = require("../../middleware/admin/uploadClould.middleware")
 // const cloudinary = require('cloudinary').v2
 // const streamifier = require('streamifier')

@@ -5,6 +5,7 @@ include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
 include ../../mixins/alert.pug
+include ../../mixins/sort.pug
 
 block main
   +alert-success(3000)
@@ -18,17 +19,15 @@ block main
           +filter-status(filtersStatus)
         .col-6
           +search(keyword)
-  .card.mb-3 
-    .card-header Danh sach san pham
-    .card-body
-      .row
-        .col-8
-          +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
-        .col-4 
-          a(
-            href=`${prefixAdmin}/products/create`
-            class="btn btn-outline-success"
-          ) + Them moi
+
+  .card.mb-3  
+    .card-header Sap xep 
+      .card-body 
+        .row 
+          .col-4 
+            +sort()
+
+
       //- form(
       //-   action =`${prefixAdmin}/products/change-multi?_method=PATCH` 
       //-   method = "POST"
@@ -47,78 +46,91 @@ block main
       //-         class="form-control d-none"
       //-       )
       //-     button(type="submit" class="btn btn-primary") Ap dung 
-
-      table(
-        class = "table table-hover table-sm"
-        checkbox-multi
-      )
-        thead
-          tr
-            th
-              input(type="checkbox", name="checkall" ) 
-            th STT
-            th Hinh anh
-            th Tieu de 
-            th Gia 
-            th Vi tri
-            th Trang thai 
-            th Hanh dong
-        
-        tbody 
-          each item, index in products
-            tr
-              td
-                input(
-                  type="checkbox", name="id", value=item.id
-                ) 
-              td #{index + 1}
-              td 
-                img(src= item.thumbnail, alt="alt" width="100px" height="auto")
-              td #{item.title}
-              td #{item.price}
-              td 
-                input(
-                  type="number",
-                  value=item.position,
-                  name="position",
-                  min="1",
-                  style="width: 60px"
-                )
-              td  
-                if(item.status == "active")
-                  //- THẻ a mặc định phương thức GET nên ko dùng sai phươgn thức đc 
-                  //- href="javascript:;" giong xu ly form
-                  a(
-                    href="javascript:;" 
-                    class="badge badge-success"
-                    button-change-status
-                    data-status = item.status
-                    data-id = item.id
-                  ) Dang Hoat dong
-                else
-                    
-                  a(
-                    href="javascript:;" 
-                    class="badge badge-danger" 
-                    button-change-status 
-                    data-status = item.status
-                    data-id = item.id
-                    ) Dug Hoat dong
-              td 
-                a(
-                  class="btn btn-secondary btn-sm"
-                  href=`${prefixAdmin}/products/detail/${item.id}`
-                ) xem chi tiet
-                a(
-                  class="btn btn-warning btn-sm"
-                  href=`${prefixAdmin}/products/edit/${item.id}`
-                ) Sua
-                //- dong 108 button -> a để có thuộc tính href và GET method 
-                button(class="btn btn-danger btn-sm ml-1"
+  .card.mb-3 
+    .card-header Danh sach san pham
+    .card-body
+      .row
+        .col-8
+          +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+        .col-4 
+          a(
+            href=`${prefixAdmin}/products/create`
+            class="btn btn-outline-success"
+          ) + Them moi
+  table(
+    class = "table table-hover table-sm"
+    checkbox-multi
+  )
+    thead
+      tr
+        th
+          input(type="checkbox", name="checkall" ) 
+        th STT
+        th Hinh anh
+        th Tieu de 
+        th Gia 
+        th Vi tri
+        th Trang thai 
+        th Hanh dong
+    
+    tbody 
+      each item, index in products
+        tr
+          td
+            input(
+              type="checkbox", name="id", value=item.id
+            ) 
+          td #{index + 1}
+          td 
+            img(src= item.thumbnail, alt="alt" width="100px" height="auto")
+          td #{item.title}
+          td #{item.price}
+          td 
+            input(
+              type="number",
+              value=item.position,
+              name="position",
+              min="1",
+              style="width: 60px"
+            )
+          td  
+            if(item.status == "active")
+              //- THẻ a mặc định phương thức GET nên ko dùng sai phươgn thức đc 
+              //- href="javascript:;" giong xu ly form
+              a(
+                href="javascript:;" 
+                class="badge badge-success"
+                button-change-status
+                data-status = item.status
                 data-id = item.id
-                button-delete
-                ) Xoa
+              ) Dang Hoat dong
+            else
+                
+              a(
+                href="javascript:;" 
+                class="badge badge-danger" 
+                button-change-status 
+                data-status = item.status
+                data-id = item.id
+                ) Dug Hoat dong
+          td 
+            a(
+              class="btn btn-secondary btn-sm"
+              href=`${prefixAdmin}/products/detail/${item.id}`
+            ) xem chi tiet
+            a(
+              class="btn btn-warning btn-sm"
+              href=`${prefixAdmin}/products/edit/${item.id}`
+            ) Sua
+            //- dong 108 button -> a để có thuộc tính href và GET method 
+            button(class="btn btn-danger btn-sm ml-1"
+            data-id = item.id
+            button-delete
+            ) Xoa
 
+  
+
+  
 
   +pagination(pagination)
   //- nav   
