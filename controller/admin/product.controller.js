@@ -239,10 +239,11 @@ module.exports.createPost = async (req, res) => {
     req.body.position = parseInt(req.body.position);
   }
   // luu path image vao db
-  if (req.file) {
+  // if (req.file) {
     // neu co file up len thi moi cho vao db => tranh die server
-    req.body.thumbnail = `/uploads/${req.file.filename}`;
-  }
+    // req.body.thumbnail = `/uploads/${req.file.filename}`;
+    // them 1 key thumbnail vao db, ko dung duong dan local nua
+  // }
   // localhost:3000/upload/duong_dan_anh
   // create 1 sp o phia modal de validate schema(chua luu vao db)
   const product = new Product(req.body);
