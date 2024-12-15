@@ -1,5 +1,7 @@
+require("dotenv").config();
 // cau hinh express
 const express = require("express");
+const path = require('path')
 const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -7,7 +9,6 @@ const session = require("express-session");
 const flash = require("express-flash");
 // const multer = require("multer");
 
-require("dotenv").config();
 
 const database = require("./config/databse");
 
@@ -44,6 +45,11 @@ app.set("view engine", "pug");
 app.use(cookieParser("keyboard cat"));
 app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
+
+
+// TINYCME
+app.use('/tinymce', express.static(path.join
+  (__dirname,'node_modules','tinymce')));
 
 // App local variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
