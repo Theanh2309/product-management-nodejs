@@ -14,11 +14,39 @@ module.exports.index = async (req, res) => {
 };
 
 // [GET] /admin/product-category/create
+// giao dien tao danh muc san pham
 module.exports.create = async (req, res) => {
-  res.render("admin/page/products-category/create.pug"),{
+  let find = {
+    deleted: false
+  }
+  function createTree(arr, parentId = "") {
+    const tree = [];
+    arr.forEach(item => {
+      // So sánh dạng chuỗi
+      if (String(item.parent_id) === String(parentId)) {
+        const newItem = { ...item }; // Tạo bản sao object
+        const children = createTree(arr, String(item._id)); // Truyền `_id` dưới dạng chuỗi
+        if (children.length > 0) {
+          newItem.children = children;
+        }
+        tree.push(newItem);
+      }
+    });
+    return tree;
+  }
+
+// get danh muc hien co trong db -> front-end
+  const records = await ProductCategory.find(find).lean()
+  // lean() : lay du lieu thuan tuy tu db
+
+  const newRecords = createTree(records)
+
+  console.log("Danh mục dạng cây:", JSON.stringify(newRecords, null, 2));
+
+  res.render("admin/page/products-category/create.pug",{
     pageTitle: "danh muc san pham",
-   
-  } 
+    records: newRecords,
+  })
 };
 
 // [POST] /admin/product-category/create

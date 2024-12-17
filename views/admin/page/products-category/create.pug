@@ -1,5 +1,7 @@
 extends ../../layout/default.pug
 include ../../mixins/alert.pug
+include ../../mixins/selectTree.pug
+
 block main
   +alert-error(4000)
   h1(class="mb-4") Them moi danh muc san pham 
@@ -20,17 +22,16 @@ block main
         class="form-control" 
         required
       ) 
-    div #{prefixAdmin}
     
     div(class="form-group")
       label(for="parent_id") Danh muc cha
-      input(
-        type="text"
-        name="parent_id" 
-        id="parent_id" 
-        class="form-control" 
-     
-      )
+      select(name="parent_id", id="parent_id" class="form-control")
+        option(value="") --chon danh muc cha--
+        if(records)
+          +select-tree(records)
+           
+          
+
 
     div(class="form-group")
       label(for="desc") Mo ta
