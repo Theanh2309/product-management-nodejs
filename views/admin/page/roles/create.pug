@@ -1,0 +1,35 @@
+extends ../../layout/default.pug
+block main
+  h1(class="mb-4") Them moi nhom quyen
+
+  form(
+    action=`${prefixAdmin}/roles/create`
+    method="POST"
+  ) 
+    //-name cua cac input lay tuong ung theo cac truong trong db(khi ng dung gui name len server thi luu luoon vao db nen name can giong trong db)
+    div(class="form-group")
+      label(for="title") Tieu de 
+      input(
+        type="text"
+        name="title" 
+        id="title" 
+        class="form-control" 
+        required
+      )
+
+    div(class="form-group")
+      label(for="desc") Mo ta
+      input(
+        type= "text"
+        name="description" 
+        id="desc" 
+        class="form-control" 
+      )
+
+    div(class="form-group")
+      button(
+        type= "submit"
+        class="btn btn-primary" 
+      ) Tao moi
+    
+
