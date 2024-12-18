@@ -1,10 +1,13 @@
 // [GET] /admin/products
 const Product = require("../../models/product.model");
+const ProductCategory = require("../../models/product-category.model");
+
 const systemcConfig = require("../../config/system");
 // import ham helpers
 const filterStatusHelper = require("../../helpers/filterStatus");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/paginations");
+const createTreeHelper = require("../../helpers/createTree");
 
 // export ten controller(products)
 module.exports.index = async (req, res) => {
@@ -89,15 +92,14 @@ module.exports.index = async (req, res) => {
   // objectPagination.totalPage = totalPage
   //=================================== END PAGINATION
 
-  const sort = {
-  }
+  const sort = {};
   // check neu nguoi dung truyen query parma len url
-  if(req.query.sortKey && req.query.sortValue){
+  if (req.query.sortKey && req.query.sortValue) {
     // key la 1 string
-    sort[req.query.sortKey] = req.query.sortValue
-  }else{
+    sort[req.query.sortKey] = req.query.sortValue;
+  } else {
     // default
-    sort.position = "desc"
+    sort.position = "desc";
   }
 
   const products = await Product.find(find)
@@ -210,8 +212,14 @@ module.exports.deleteItem = async (req, res) => {
 // [GET] admin/products/create
 // tao giao dien => phuong thuc GET, submit => POST
 module.exports.create = async (req, res) => {
+  const category = await ProductCategory.find({
+    deleted: false,
+  }).lean();
+  // đổ ra view cho front-end
+  const newCategory = createTreeHelper.tree(category);
   res.render("admin/page/products/create.pug", {
     pageTitle: "them moi san pham",
+    category: newCategory,
   });
 };
 
@@ -252,9 +260,9 @@ module.exports.createPost = async (req, res) => {
   }
   // luu path image vao db
   // if (req.file) {
-    // neu co file up len thi moi cho vao db => tranh die server
-    // req.body.thumbnail = `/uploads/${req.file.filename}`;
-    // them 1 key thumbnail vao db, ko dung duong dan local nua
+  // neu co file up len thi moi cho vao db => tranh die server
+  // req.body.thumbnail = `/uploads/${req.file.filename}`;
+  // them 1 key thumbnail vao db, ko dung duong dan local nua
   // }
   // localhost:3000/upload/duong_dan_anh
   // create 1 sp o phia modal de validate schema(chua luu vao db)
