@@ -285,10 +285,16 @@ module.exports.edit = async (req, res) => {
     const product = await Product.findOne(find);
     // find tra ra 1 array => findone tim 1 phan tu=> tra ra object
 
+    const category = await ProductCategory.find({
+      deleted: false,
+    }).lean();
+    // đổ ra view cho front-end
+    const newCategory = createTreeHelper.tree(category);
     res.render("admin/page/products/edit.pug", {
       pageTitle: "chinh sua san pham",
       // truyen data ra ngoai view
       product: product,
+      category: newCategory,
     });
   } catch (error) {
     // req.flash("error", "khong ton tai san pham nay!");
