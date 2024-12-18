@@ -11,7 +11,7 @@ mixin table-tree(records, level = 1)
         img(src= item.thumbnail, alt="alt" width="100px" height="auto")
       
       td #{prefix}#{item.title}
-      
+
       td 
         input(
           type="number",
@@ -42,15 +42,15 @@ mixin table-tree(records, level = 1)
       td 
         a(
           class="btn btn-secondary btn-sm"
-          href=`${prefixAdmin}/products-category/detail/${item.id}`
+          href=`${prefixAdmin}/products-category/detail/${item._id}`
         ) xem chi tiet
         a(
           class="btn btn-warning btn-sm"
-          href=`${prefixAdmin}/products-category/edit/${item.id}`
+          href=`${prefixAdmin}/products-category/edit/${item._id}`
         ) Sua
         //- dong 108 button -> a để có thuộc tính href và GET method 
         button(class="btn btn-danger btn-sm ml-1"
-        data-id = item.id
+        data-id = item._id
         button-delete
         ) Xoa
 

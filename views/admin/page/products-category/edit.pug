@@ -1,13 +1,11 @@
 extends ../../layout/default.pug
 include ../../mixins/alert.pug
 include ../../mixins/selectTree.pug
-
-
 block main
   +alert-error(4000)
-  h1(class="mb-4") Them moi danh muc san pham 
+  h1(class="mb-4") chinh sua danh muc san pham 
   form(
-    action= prefixAdmin + "/products-category/create"
+    action= prefixAdmin + `/products-category/edit/${data._id}?_method=PATCH`
     method="POST"
     enctype="multipart/form-data"
     id="form-create-product"
@@ -22,14 +20,15 @@ block main
         id="title" 
         class="form-control" 
         required
+        value=data.title
       ) 
     
     div(class="form-group")
       label(for="parent_id") Danh muc cha
       select(name="parent_id", id="parent_id" class="form-control")
-        option(value="") --chon danh muc cha--
+        option(value= "") --chon danh muc cha--
         if(records)
-          +select-tree(records)
+          +select-tree(records,1,data.parent_id)
            
     div(class="form-group")
       label(for="desc") Mo ta
@@ -38,7 +37,7 @@ block main
         name="description" 
         id="content" 
         class="content" 
-      )
+      ) #{data.description}
     
     div(
       class="form-group"
@@ -53,7 +52,7 @@ block main
         accept="image/*"
         upload-image-input
       )
-      img(src="" alt="image" upload-image-preview class="image-prev") 
+      img(src= data.thumbnail alt="image" upload-image-preview class="image-prev") 
 
     div(class="form-group")
       label(for="position") Vi tri
@@ -64,6 +63,7 @@ block main
         class="form-control" 
         min="1"
         placeholder="tu dong tang"
+        value = data.position
       ) 
     div(class="form-group form-check form-check-inline")
       input(
@@ -72,7 +72,7 @@ block main
         id="statusActive" 
         class="form-check-input" 
         value="active"
-        checked
+        checked= (data.status == "active" ? true: false)
       ) 
       label(for="statusActive" class="form-check-label") Hoat dong 
     
@@ -83,7 +83,7 @@ block main
         id="statusInActive" 
         class="form-check-input" 
         value="inactive"
-     
+        checked= (data.status == "inactive" ? true: false)
       ) 
       label(for="statusInActive" class="form-check-label") Dung hoat dong 
     
@@ -91,9 +91,9 @@ block main
     button(
       type="submit"
       class="btn btn-primary"
-    ) Tao moi
+    ) UPDATE
     
-  script(src="/admin/js/products.js")
+  //- script(src="/admin/js/products.js")
 
   
 
