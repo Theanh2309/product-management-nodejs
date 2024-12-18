@@ -146,7 +146,7 @@ module.exports.changeMulti = async (req, res) => {
     case "active":
       // update 1 mang id ma minh muon update thay vi 1 id
       // chua vaidate
-      await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+      // await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
       await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
       req.flash(
         "success",
@@ -177,7 +177,7 @@ module.exports.changeMulti = async (req, res) => {
         let [id, position] = item.split("-");
         position = parseInt(position);
         await Product.updateOne({ _id: id }, { position: position });
-        await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+        // await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
         req.flash(
           "success",
           `thanh doi vi tri san pham thanh cong ${ids.length} san pham`
