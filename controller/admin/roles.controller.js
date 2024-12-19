@@ -25,8 +25,34 @@ module.exports.create = async (req, res) => {
 
 module.exports.createPost = async (req, res) => {
   const { title, description } = req.body;
-  console.log({ title, description });
   const record = new Role(req.body);
   await record.save();
   res.redirect(`${systemcConfig.prefixAdmin}/roles`);
+};
+
+// GET /admin/roles/edit/id
+module.exports.edit = async (req, res) => {
+  try {
+    let find = {
+      deleted: false,
+      _id: req.params.id,
+    };
+    const records = await Role.findOne(find);
+    res.render("admin/page/roles/edit.pug", {
+      pageTitle: "chinh sua nhom quyen",
+      records: records,
+    });
+  } catch (error) {
+    res.redirect(`${systemcConfig.prefixAdmin}/roles`);
+  }
+};
+
+module.exports.editPatch = async (req, res) => {
+  try {
+    await Role.updateOne({ _id: req.params.id }, req.body);
+    req.flash("success", "cap nhat nhom quyen thanh cong");
+    res.redirect("back");
+  } catch (error) {
+    req.flash("success", "cap nhat nhom quyen that bai");
+  }
 };
