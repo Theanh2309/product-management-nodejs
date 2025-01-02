@@ -56,3 +56,29 @@ module.exports.editPatch = async (req, res) => {
     req.flash("success", "cap nhat nhom quyen that bai");
   }
 };
+
+// [GET] /admin/roles/permissions
+
+module.exports.permissions = async (req, res) => {
+  // get list quyen
+  const find = {
+    deleted: false,
+  };
+  const records = await Role.find(find);
+  res.render("admin/page/roles/permissions.pug", {
+    pageTitle: "Phan quyen",
+    records: records,
+  });
+};
+
+module.exports.permissionsPatch = async (req, res) => {
+  const permissions = JSON.parse(req.body.permissions);
+  for (const item of permissions) {
+    const id = item.id;
+    const permissions = item.permissions;
+    console.log({ item });
+    await Role.updateOne({ _id: id }, { permissions: permissions });
+  }
+  req.flash("success", "cap nhat phan quyen thanh cong");
+  res.redirect("back");
+};
